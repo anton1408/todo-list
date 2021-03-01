@@ -2,15 +2,32 @@
   <div class="todo-task">
     <div class="todo-task__actions">
       <c-checkbox
+        :checked="task.checked"
         class="todo-task__checkbox"
         @click="checkboxHandler"
       />
-      <c-datepicker class="todo-task__datepicker" />
-      <c-edit-btn class="todo-task__edit-btn" />
-      <c-delete-btn class="todo-task__delete-btn" />
+      <c-datepicker
+        :date="task.date"
+        :disabled="isDisabled"
+        class="todo-task__datepicker"
+        @input="dateHandler"
+      />
+      <c-edit-btn
+        class="todo-task__edit-btn"
+        @click="editHandler"
+      />
+      <c-delete-btn
+        class="todo-task__delete-btn"
+        @delete="$emit('delete')"
+      />
     </div>
     <div class="todo-task__task-body">
-      <c-text-field />
+      <c-text-field
+        :description="task.description"
+        :disabled="isDisabled"
+        :checked="isChecked"
+        @input="description = $event"
+      />
     </div>
   </div>
 </template>
@@ -31,9 +48,41 @@ export default {
     'c-delete-btn': CDeleteBtn,
     'c-text-field': CTextField
   },
+  props: {
+    task: Object
+  },
+  data: () => ({
+    isDisabled: true,
+    isChecked: false,
+    date: null,
+    description: null
+  }),
+  mounted () {
+    this.description = this.task.description
+    this.isChecked = this.task.checked
+    this.date = this.task.date
+  },
   methods: {
     checkboxHandler (e) {
-      console.log(e)
+      this.isChecked = e
+      this.updateTask()
+    },
+    dateHandler (e) {
+      this.date = e
+    },
+    editHandler (e) {
+      this.isDisabled = e
+      if (e) {
+        this.updateTask()
+      }
+    },
+    updateTask () {
+      const data = {
+        checked: this.isChecked,
+        date: this.date,
+        description: this.description
+      }
+      this.$emit('update', data)
     }
   }
 }

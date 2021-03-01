@@ -18,9 +18,18 @@ export default {
     'checkbox-false-icon': CheckboxFalseIcon,
     'checkbox-true-icon': CheckboxTrueIcon
   },
+  props: {
+    checked: {
+      type: Boolean,
+      default: () => false
+    }
+  },
   data: () => ({
     value: false
   }),
+  mounted () {
+    this.value = this.checked
+  },
   methods: {
     click () {
       this.value = !this.value

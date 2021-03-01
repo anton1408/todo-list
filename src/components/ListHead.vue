@@ -4,15 +4,15 @@
     <div class="list-head__list-score">
       <div class="list-head__scope">
         Scope
-        <p class="list-head__scope-score">15</p>
+        <p class="list-head__scope-score">{{totalTasks}}</p>
       </div>
       <div class="list-head__active">
         Active
-        <p class="list-head__active-score">8</p>
+        <p class="list-head__active-score">{{activeTasks}}</p>
       </div>
       <div class="list-head__successful">
         Successful
-        <p class="list-head__successful-score">7</p>
+        <p class="list-head__successful-score">{{successfulTasks}}</p>
       </div>
     </div>
   </div>
@@ -20,7 +20,12 @@
 
 <script>
 export default {
-  name: 'ListHead'
+  name: 'ListHead',
+  props: {
+    totalTasks: Number,
+    activeTasks: Number,
+    successfulTasks: Number
+  }
 }
 </script>
 

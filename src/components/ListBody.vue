@@ -4,18 +4,30 @@
       <c-btn
         icon
         class="list-body__create-btn--top"
+        @click="createTask"
       >
         <plus-icon
           size="36"
           style="transform:rotate(-45deg)"
         />
       </c-btn>
-      <todo-task />
+      <template v-for="task in tasksList">
+        <todo-task
+          :key="task['.key']"
+          :task="task"
+          @delete="deleteTask(task['.key'])"
+          @update="updateTask(task['.key'], $event)"
+        />
+      </template>
+      <template v-if="tasksList.length === 0">
+        <h3 class="list-body__title">The to-do list is empty.</h3>
+      </template>
       <br>
       <br>
       <c-btn
         title="Create new task"
         class="list-body__create-btn"
+        @click="createTask"
       >
         <template v-slot:prependIcon>
           <plus-icon />
@@ -36,6 +48,28 @@ export default {
     'c-btn': CBtn,
     'plus-icon': PlusIcon,
     'todo-task': TodoTask
+  },
+  props: {
+    tasksList: Array
+  },
+  mounted () {
+    console.log('tasksList', this.tasksList)
+  },
+  methods: {
+    deleteTask (e) {
+      this.$emit('delete-task', e)
+    },
+    updateTask (i, data) {
+      this.$emit('update-task', i, data)
+    },
+    createTask () {
+      const data = {
+        checked: false,
+        date: Date.now(),
+        description: ''
+      }
+      this.$emit('create-task', data)
+    }
   }
 }
 </script>
@@ -57,12 +91,16 @@ export default {
      &--top {
        position: absolute;
        left: 50%;
-       top: -10%;
+       top: -25px;
        transform: translate(-50%) rotate(45deg);
        width: 48px;
        height: 48px;
        margin: 0 auto;
      }
+   }
+
+   &__title {
+     text-align: center;
    }
  }
 </style>

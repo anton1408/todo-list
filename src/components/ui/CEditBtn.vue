@@ -3,7 +3,7 @@
     class="c-edit-btn"
     @click="click"
   >
-    <edit-icon v-if="!value" />
+    <edit-icon v-if="value" />
     <confirm-icon v-else />
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     'confirm-icon': ConfirmIcon
   },
   data: () => ({
-    value: false
+    value: true
   }),
   methods: {
     click () {

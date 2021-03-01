@@ -78,7 +78,7 @@ export default {
       border-radius: 11px;
     }
 
-    &__disabled { pointer-events: none; }
+    &__disabled {pointer-events: none;}
   }
 
 </style>
