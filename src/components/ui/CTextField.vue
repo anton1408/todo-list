@@ -1,5 +1,8 @@
 <template>
-  <div class="c-text-field">
+  <div
+    :class="classNameWrapper"
+    class="c-text-field"
+  >
     <textarea
       v-model="fieldValue"
       :placeholder="placeholder"
@@ -45,6 +48,11 @@ export default {
         'c-text-field__disabled': this.disabled,
         'c-text-field__textarea--checked': this.checked
       }
+    },
+    classNameWrapper () {
+      return {
+        'c-text-field__wrapper--active': !this.disabled
+      }
     }
   },
   mounted () {
@@ -63,6 +71,10 @@ export default {
   .c-text-field {
     border-bottom: 1px solid #c7c7c7;
     padding: 0  60px 0 26px;
+
+    &__wrapper--active {
+      border-bottom: 1px solid #889DEA;
+    }
 
     &__textarea {
       width: 100%;

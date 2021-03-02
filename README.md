@@ -1,4 +1,5 @@
 # todo-list
+used vue.js + Firebase Realtime Database
 
 ## Project setup
 ```
